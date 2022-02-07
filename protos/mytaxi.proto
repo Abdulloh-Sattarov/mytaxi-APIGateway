@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package mytaxi;
+
+service MyTaxiService {
+    rpc CreateDriver(Driver) returns (Driver);
+    rpc GetDriver(ByIdReq) returns (Driver);
+    rpc UpdateDriver(Driver) returns (Driver);
+    rpc DeleteDriver(ByIdReq) returns (EmptyResp);
+
+    rpc CreateClient(Client) returns (Client);
+    rpc GetClient(ByIdReq) returns (Client);
+    rpc UpdateClient(Client) returns (Client);
+    rpc DeleteClient(ByIdReq) returns (EmptyResp);
+
+    rpc CreateOrder(OrderReq) returns (OrderRes);
+    rpc GetOrder(ByIdReq) returns (OrderRes);
+    rpc ListOrders(ListOrdersReq) returns (ListOrdersRes);
+    rpc UpdateOrder(OrderReq) returns (OrderRes);
+    rpc DeleteOrder(ByIdReq) returns (EmptyResp);
+}
+
+message EmptyResp {}
+
+message Driver {
+    string Id = 1;
+    string FirstName = 2;
+    string LastName = 3;
+    string Phone = 4;
+    string CarModel = 5;
+    string CreatedAt = 6;
+    string UpdatedAt = 7;
+}
+
+message Client {
+    string Id = 1;
+    string FirstName = 2;
+    string LastName = 3;
+    string Phone = 5;
+    string CreatedAt = 6;
+    string UpdatedAt = 7;
+}
+
+message OrderReq {
+    string Id = 1;
+    float Cost = 2;
+    string Status = 3;
+    string ClientId = 4;
+    string DriverId = 5;
+}
+
+message OrderRes {
+    string Id = 1;
+    float Cost = 2;
+    string Status = 3;
+    Client Client = 4;
+    Driver Driver = 5;
+    string CreatedAt = 6;
+    string UpdatedAt = 7;
+}
+
+message ByIdReq {
+    string Id = 1;
+}
+
+message ListOrdersReq {
+    string ClientId = 1;
+    int64 page = 2;
+    int64 limit = 3;
+}
+
+message ListOrdersRes {
+    repeated OrderRes Orders = 1;
+    int64 Count = 2; 
+}
